@@ -1,7 +1,7 @@
 <?php
 //namespace Example\Controllers;
 
-class IndexController extends ControllerBase
+class UsersController extends ControllerBase
 {
 		public function initialize(){
 			$this->view->setTemplateBefore('private');
@@ -9,8 +9,7 @@ class IndexController extends ControllerBase
 
     public function indexAction()
     {
-    	
+    	$this->view->setVar("users", Users::find());
     }
 
 }
-

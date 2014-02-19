@@ -6,7 +6,9 @@ use Phalcon\DI\FactoryDefault,
     Phalcon\Db\Adapter\Pdo\PostgreSQL as DbAdapter,
     Phalcon\Mvc\View\Engine\Volt as VoltEngine,
     Phalcon\Mvc\Model\Metadata\Memory as MetaDataAdapter,
-    Phalcon\Session\Adapter\Files as SessionAdapter;
+    Phalcon\Session\Adapter\Files as SessionAdapter,
+    Phalcon\Flash\Direct,
+    Phalcon\Flash\Session;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -77,4 +79,13 @@ $di->set('session', function () {
     $session->start();
 
     return $session;
+});
+
+$di->set('flash', function(){
+    $flash = new \Phalcon\Flash\Direct(array(
+        'error' => 'alert alert-error',
+        'success' => 'alert alert-success',
+        'notice' => 'alert alert-info',
+    ));
+    return $flash;
 });
