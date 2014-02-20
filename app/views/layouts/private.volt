@@ -17,7 +17,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
             	<li class="active"><a href="#">Logged as <?php echo $this->session->get('auth')['username'] ?></a></li>
-              <li><a href="session/end">Logout</a></li>
+              <li><a href="{{ url("session/end") }}">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -28,8 +28,8 @@
 			<div style="float:left; width:150px;">
 				<ul class="nav nav-list">
 				  <li class="nav-header">Categories</li>
-				  <li class="active"><a href="index">Home</a></li>
-				  <li><a href="users">Users</a></li>
+				  <li><a href="{{ url("index") }}">Home</a></li>
+				  <li><a href="{{ url("users/index") }}">Users</a></li>
 				</ul>				
 			</div>
 			<div style="float:left; margin-left:30px; width:80%">

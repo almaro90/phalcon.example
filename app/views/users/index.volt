@@ -1,19 +1,35 @@
+<?php use Phalcon\Tag as Tag; ?>
 {{ content() }}
 <table class="table table-striped">
 	<tr>
 		<th>ID</th><th>Username</th><th>Options</th>
 	</tr>
-	{% for user in users %}
-		<tr>
-			<td>{{ user.id }}</td>
-			<td>{{ user.username }}</td>
-			<td>
-				<div class="btn-group">
-				  <button class="btn btn-info">Info</button>
-				  <button class="btn btn-warning">Edit</button>
-				  <button class="btn btn-danger">Delete</button>
-				</div>
-			</td>
-		</tr>
-	{% endfor %}
+	<?php foreach($page->items as $user): ?>
+		
+			<tr>
+				<td><?php echo $user->id ?></td>
+				<td><?php echo $user->username ?></td>
+				<td>
+					<div class="btn-group">
+					  <a href="{{ url("users/edit") }}/<?php echo $user->id ?>" class="btn btn-warning">Edit</a>
+					  <a href="{{ url("users/delete") }}/<?php echo $user->id ?>" class="btn btn-danger">Delete</a>
+					</div>
+				</td>
+			</tr>
+		
+	<?php endforeach; ?>
 </table>
+
+<div class="pagination">
+	<ul>
+		<li><?php echo Tag::linkTo(array("users/index/","First")) ?></li>
+	  <?php for($i = 1; $i <= $page->total_pages; $i++): ?>
+	  	<?php if($page->current == $i): ?>
+				<li class="active"><?php echo Tag::linkTo(array("users/index/".$i ,$i)) ?></li>
+			<?php else: ?>
+				<li><?php echo Tag::linkTo(array("users/index/".$i ,$i)) ?></li>
+			<?php endif; ?>	
+	  <?php endfor; ?>
+	  <li><?php echo Tag::linkTo(array("users/index/".$page->last,"Last")) ?></li>
+  </ul>
+</div>

@@ -10,6 +10,7 @@ class ControllerBase extends Controller
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
         $controllerName = $dispatcher->getControllerName();
+        $actionName = $dispatcher->getActionName();
 
         if(!$this->session->get('auth')){
         	if($controllerName != 'session'){
@@ -18,6 +19,16 @@ class ControllerBase extends Controller
             $dispatcher->forward(array(
                 'controller' => 'session',
                 'action' => 'login'
+            ));
+            return false;
+        	}
+        } else if($this->session->get('auth')){
+        	if($actionName != "end" && $controllerName == 'session'){
+        		$this->flash->notice('You are already logged & also the biggest bitch around the world.');
+        		//return $this->response->redirect("session/login");
+            $dispatcher->forward(array(
+                'controller' => 'index',
+                'action' => 'index'
             ));
             return false;
         	}

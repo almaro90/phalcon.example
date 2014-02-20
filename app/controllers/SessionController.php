@@ -96,7 +96,8 @@ class SessionController extends ControllerBase
     {
         $this->session->remove('auth');
         $this->flash->success('Goodbye!');
-        return $this->response->redirect("session/login");
+        //return $this->response->redirect("session/login");
+        return $this->dispatcher->forward(array("controller" => "session","action" => "login"));
     }
 }
 
