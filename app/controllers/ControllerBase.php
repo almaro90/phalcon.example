@@ -22,7 +22,7 @@ class ControllerBase extends Controller
             ));
             return false;
         	}
-        } else if($this->session->get('auth')){
+        } else{
         	if($actionName != "end" && $controllerName == 'session'){
         		$this->flash->notice('You are already logged & also the biggest bitch around the world.');
         		//return $this->response->redirect("session/login");

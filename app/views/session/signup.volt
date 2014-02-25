@@ -1,3 +1,5 @@
+{% extends "layouts/public.volt" %}
+{% block content %}
 <div class="well" style="width:220px;margin:auto;margin-top:120px;">
 	<h1>SignUp</h1>
 	{{ form('session/signup', 'method': 'post') }}
@@ -9,3 +11,4 @@
 	{{ link_to('session/login','Go to LOGIN', 'class':'btn btn-primary btn-block') }}
 </div>
 <div style="width:400px;margin:auto;margin-top:20px;">{{ content() }}</div>
+{% endblock %}

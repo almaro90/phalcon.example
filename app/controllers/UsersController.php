@@ -4,7 +4,7 @@
 class UsersController extends ControllerBase
 {
 		public function initialize(){
-			$this->view->setTemplateBefore('private');
+			//$this->view->setTemplateBefore('private');
 		}
 
     public function indexAction($numberPage = 1)
@@ -25,18 +25,37 @@ class UsersController extends ControllerBase
 			$this->view->setVar("page", $page);
     }
 
-    public function editAction($id){
+    public function editAction($id= null){
     	$request = $this->request;
 			if (!$request->isPost()) {
+				$user = Users::findFirst($id);
 
-				$user = Users::findFirstById($id);
-				if (!$user) {
+				if ($id == null || !$user) {
 					$this->flash->error("User was not found");
 					return $this->dispatcher->forward(array("controller" => "users","action" => "index"));
 				}
 
-				$this->view->setVar('user', $user);
+				$this->view->user = $user->password = "";
+				$this->view->form = new UserEditForm($user);
+			} else {
+				if($this->request->getPost('password') != $this->request->getPost('password_confirmation')){
+					$this->flash->error('Passwords are diferent');
+          return false;
+				}
+				$user = new Users();
+				$user->assign(array(
+            'username' => $this->request->getPost('username', 'striptags'),
+            'password' => $this->request->getPost('password')
+        ));
+
+        if (!$user->save()) {
+            $this->flash->error($user->getMessages());
+        } else {
+            $this->flash->success("User was updated successfully");
+            return $this->dispatcher->forward(array("controller" => "users","action" => "index"));	
+        }
 			}
+			
     }
 
     public function deleteAction($id = null){

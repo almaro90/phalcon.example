@@ -29,14 +29,16 @@
 				<ul class="nav nav-list">
 				  <li class="nav-header">Categories</li>
 				  <li><a href="{{ url("index") }}">Home</a></li>
-				  <li><a href="{{ url("users/index") }}">Users</a></li>
+				  <li><a href="{{ url("users/index") }}">CRUD Users</a></li>
 				</ul>				
 			</div>
 			<div style="float:left; margin-left:30px; width:80%">
-				{{ content() }}
+				{% block content %}
+				{% endblock %}
 			</div>
 		</div>
 		{{ javascript_include("js/jquery/jquery.min.js") }}
 		{{ javascript_include("js/bootstrap/bootstrap.min.js") }}
+		{% block scripts %}{% endblock %}
 	</body>
 </html>

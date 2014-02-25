@@ -1,9 +1,12 @@
-{{ content() }}
-<h1>Editar</h1>
-{{ form('users/edit', 'method': 'post') }}
-	{{ text_field('username','placeholder':'Username') }}<br>
-	{{ hidden_field('id') }}
-	{{ password_field('password', 'placeholder':'Password') }}<br>
-	{{ password_field('password_confirmation', 'placeholder':'Confirm Pass') }}<br>
-	{{ submit_button('Editar', 'class':'btn btn-success') }}
-</form>
+{% extends 'layouts/private.volt' %}
+{% block content %}
+	<h2>Editar</h2>
+	<form method="post" action="{{ url("users/edit") }}" autocomplete="off">
+	{{ form.render('id') }}
+	{{ form.render('username') }}<br>
+	{{ form.render('password') }}<br>
+	{{ form.render('password_confirmation') }}<br>
+	{{ form.render('csrf', ['value':security.getToken()]) }}
+	{{ form.render('edit') }}
+	</form>
+{% endblock %}

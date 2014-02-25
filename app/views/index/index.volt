@@ -1,2 +1,10 @@
-{{ content() }}
-<h1>Hola, <?php echo $this->session->get('auth')['username'] ?></h1>
+{% extends 'layouts/private.volt' %}
+
+{% block content %}
+	{{ content() }}
+	<h2>Index</h2>
+{% endblock %}
+
+{% block scripts %}
+	
+{% endblock %}

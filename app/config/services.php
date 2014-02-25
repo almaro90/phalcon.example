@@ -89,3 +89,12 @@ $di->set('flash', function(){
     ));
     return $flash;
 });
+
+$di->set('flashSession', function(){
+    $flash = new \Phalcon\Flash\Session(array(
+        'error' => 'alert alert-error',
+        'success' => 'alert alert-success',
+        'notice' => 'alert alert-info',
+    ));
+    return $flash;
+});
