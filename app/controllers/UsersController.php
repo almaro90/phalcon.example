@@ -15,7 +15,7 @@ class UsersController extends ControllerBase
 
     	$paginator = new Phalcon\Paginator\Adapter\Model(array(
 			    "data" => $users,    //Data to paginate
-			    "limit" => 3,           //Rows per page
+			    "limit" => 8,           //Rows per page
 			    "page" => $numberPage   //Active page
 			));
 
@@ -23,6 +23,25 @@ class UsersController extends ControllerBase
 			$page = $paginator->getPaginate();
 
 			$this->view->setVar("page", $page);
+    }
+
+    public function createAction(){
+    	$request = $this->request;
+			if ($request->isPost()) {
+				$user = new Users();
+				$user->assign(array(
+            'username' => $this->request->getPost('username', 'striptags'),
+            'password' => $this->request->getPost('password')
+        ));
+
+        if (!$user->save()) {
+            $this->flash->error($user->getMessages());
+        } else {
+            $this->flash->success("User was created successfully");
+            return $this->dispatcher->forward(array("controller" => "users","action" => "index"));	
+        }
+			}
+			$this->view->form = new UserEditForm(null, false);
     }
 
     public function editAction($id= null){
@@ -36,7 +55,7 @@ class UsersController extends ControllerBase
 				}
 
 				$this->view->user = $user->password = "";
-				$this->view->form = new UserEditForm($user);
+				$this->view->form = new UserEditForm($user, true);
 			} else {
 				if($this->request->getPost('password') != $this->request->getPost('password_confirmation')){
 					$this->flash->error('Passwords are diferent');

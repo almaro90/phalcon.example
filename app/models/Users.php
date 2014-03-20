@@ -29,6 +29,17 @@ class Users extends Model
      */
     public $password;
 
+    /**
+     *
+     * @var date
+     */
+    public $created_at;
+
+    public function beforeCreate()
+    {
+        //Set the creation date
+        $this->created_at = date('Y-m-d H:i:s');
+    }
 
     /**
      * Before create the user assign a password
